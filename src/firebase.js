@@ -4,9 +4,8 @@ import 'firebase/firestore';
 
 // Configuration (mettez-y les vôtres !)
 const firebaseConfig = {
-  
-};
 
+};
 // Initialiser Firebase
 if(!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);

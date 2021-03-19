@@ -3,6 +3,7 @@ import Dossier from './Dossier';
 import { firestore } from '../firebase';
 import { useEffect, useState } from 'react';
 
+
 export default function ListeDossiers({utilisateur, etatDossiers}) {
   // État des dossiers (notez que cet état est défini dans le composant parent "Appli", et passé ici dans les props)
   const [dossiers, setDossiers] = etatDossiers;
@@ -32,6 +33,9 @@ export default function ListeDossiers({utilisateur, etatDossiers}) {
   );
 
   return (
+    // La liste de dossiers n'est pas vide ?
+    dossiers!='' ?
+    <>
     <ul className="ListeDossiers">
       {
         dossiers.map( 
@@ -39,5 +43,9 @@ export default function ListeDossiers({utilisateur, etatDossiers}) {
         )
       }
     </ul>
+    </>
+     // Sinon : (la liste est vide)
+     :
+     <div className="msgListeVide">Votre liste de dossiers est vide!</div>
   );
 }

@@ -1,25 +1,48 @@
 import './Dossier.scss'; 
+import { useState } from 'react';
 import { IconButton } from '@material-ui/core';
 import SortIcon from '@material-ui/icons/Sort';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
+import imgCouvertureDefaut from '../images/couverture.webp';
+
 
 export default function Dossier({id, nom, couleur, datemodif, couverture}) {
+  const [pointAncrgEl, setpointAncrgEl] = useState(null);
 
+  const gererClic = (evt) => {
+    setpointAncrgEl(evt.currentTarget);
+  };
+
+  const gererFermeture = () => {
+    setpointAncrgEl(null);
+  };
   return (
     <article className="Dossier" style={{backgroundColor: couleur}}>
       <div className="couverture">
         <IconButton className="deplacer" aria-label="déplacer" disableRipple={true}>
           <SortIcon />
         </IconButton>
-        <img src={couverture} alt={nom}/>
+        <img src={!couverture?imgCouvertureDefaut:couverture} alt={nom}/>
       </div>
       <div className="info">
         <h2>{nom}</h2>
         <p>Modifié : {formaterDate(datemodif)}</p>
       </div>
-      <IconButton className="modifier" aria-label="modifier" size="small">
+      <IconButton className="modifier" onClick={gererClic} aria-label="modifier" size="small">
         <MoreVertIcon />
       </IconButton>
+      <Menu
+        id="simple-menu"
+        anchorEl={pointAncrgEl}
+        keepMounted
+        open={Boolean(pointAncrgEl)}
+        onClose={gererFermeture}
+      >
+        <MenuItem onClick={gererFermeture}>Modifier</MenuItem>
+        <MenuItem onClick={gererFermeture}>Supprimer</MenuItem>
+      </Menu>
     </article>
   );
 }
